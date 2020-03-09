@@ -28,7 +28,9 @@ Material:
     - _NoiseFrequency: 5.9
     - _NoiseScale: 1
     - _NoiseSpeed: 1
-    - _PixelOffset: 0.49
+    - _PixelOffset: 1.82
+    - _Radius: 0.643
+    - _Softness: 0
     - _Speed: 1
     - _Water: 1
     m_Colors: []

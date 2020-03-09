@@ -2,11 +2,11 @@
 {
     Properties
     {
-		_Color("Color", Color) = (0, 0, 0, 1)
         _MainTex("Texture", 2D) = "white" {}
 		_Radius("Radius", Range(0, 1)) = 1
 		_Softness("Softness", Range(0, 1)) = 0.5
-		_Opacity("Opacity", Range(0, 1)) = 1
+		//_Color("Color", Color) = (0, 0, 0, 1)
+		//_Opacity("Opacity", Range(0, 1)) = 1
     }
     SubShader
     {
@@ -25,6 +25,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+			#include "Assets/dima.cginc"
 
             sampler2D _MainTex;
 			float _Radius;
@@ -35,10 +36,8 @@
             fixed4 frag (v2f_img i) : SV_Target
             {
                 fixed4 baseColor = tex2D(_MainTex, i.uv);
-				float distFromCenter = distance(i.uv.xy, float2(0.5, 0.5));
-				float radius = 1 - _Radius;
-				float vignette = smoothstep(radius, radius - _Softness, distFromCenter);
-				fixed4 finalFignette = baseColor * vignette;
+				
+				fixed4 finalFignette = baseColor * Vignette(i.uv, 1 - _Radius, _Softness);
 				return finalFignette;
             }
             ENDCG

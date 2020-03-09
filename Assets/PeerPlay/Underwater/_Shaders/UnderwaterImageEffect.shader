@@ -8,6 +8,10 @@
 		_Frequency("Noice Frequency", Range(0, 50)) = 0
 		_Speed("Noise Speed", Range(0, 5)) = 1
 		_PixelOffset("Pixel Offset", Range(0, 10)) = 1
+
+		[Header(Vignette)]
+		_Radius("Radius", Range(0, 1)) = 1
+		_Softness("Softness", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -22,10 +26,14 @@
 
             #include "UnityCG.cginc"
 			#include "noiseSimplex.cginc"
+			#include "Assets/dima.cginc"
 			//#define M_PI 3.1415926535897932384626433832795
 
 			uniform float _Frequency, _Speed, _NoiseScale, _PixelOffset;
 			fixed _Water;
+
+			float _Radius;
+			float _Softness;
 
             struct appdata
             {
@@ -53,6 +61,8 @@
 
             fixed4 frag (v2f i) : COLOR
             {
+				float vignette = Vignette(i.uv, 1 - _Radius, _Softness);
+
                 float3 sPos = float3(i.screenPos.x, i.screenPos.y, 0) * _Frequency;
 				sPos.z += _Time.y * _Speed;
 
@@ -64,6 +74,7 @@
 				if (_Water != 0) col = tex2Dproj(_MainTex, i.screenPos + normalize(dir) * _PixelOffset / 100);
 
                 return col;
+				//return lerp(tex2D(_MainTex, i.uv), col, 1 - vignette);
             }
             ENDCG
         }

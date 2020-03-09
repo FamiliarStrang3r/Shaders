@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawEffect: 1
-  material: {fileID: 2100000, guid: 1bbc079994bc0a54cb6e6d59b5cca03c, type: 2}
+  material: {fileID: 2100000, guid: 3ee17c34898959b408a9991f77af3f7a, type: 2}
 --- !u!1001 &251256946336775220
 PrefabInstance:
   m_ObjectHideFlags: 0

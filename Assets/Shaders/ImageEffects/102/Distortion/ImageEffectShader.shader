@@ -13,7 +13,10 @@
 
     SubShader
     {
-		Tags { "PreviewType"="Plane" }
+		Tags 
+		{ 
+			"PreviewType"="Plane" 
+		}
         // No culling or depth
         Cull Off ZWrite Off ZTest Always
 
@@ -24,6 +27,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+			#include "Assets/dima.cginc"
 
             struct appdata
             {
@@ -53,20 +57,9 @@
 			sampler2D _Mask;
 			float _Inverted;
 
-			fixed4 GetUVColor(float2 uv)
-			{
-				fixed4 red = fixed4(uv.r, uv.g, 0, 1);
-				fixed4 blue = fixed4(uv.r, uv.g, 1, 1);
-				float sinValue = sin(_Time.y * _Speed);
-				float percent01 = (sinValue + 1) / 2;
-				fixed4 color = lerp(red, blue, percent01);
-
-				return color;
-			}
-
 			fixed4 GetWaveEffectColor(float2 uv)
 			{
-				float2 distuv = float2(uv.x - _Time.x * _DisplaceSpeed.x, uv.y - _Time.x * _DisplaceSpeed.y);
+				float2 distuv = float2(uv.x - _Time.y * _DisplaceSpeed.x, uv.y - _Time.y * _DisplaceSpeed.y);
 
 				float2 disp = tex2D(_DisplaceTex, distuv).xy;//animated
                 //float2 disp = tex2D(_DisplaceTex, uv).xy;//not animated
@@ -77,14 +70,9 @@
 				return col;
 			}
 
-			fixed4 GetGrayscale(fixed4 c)
-			{
-				return (c.r + c.g + c.b) / 3;
-			}
-
             fixed4 frag (v2f i) : SV_Target
             {
-				fixed4 effect = GetWaveEffectColor(i.uv) * GetUVColor(i.uv);
+				fixed4 effect = GetWaveEffectColor(i.uv) * GetUVColor(i.uv, _Speed);
 
 				float4 baseColor = tex2D(_MainTex, i.uv);
 				float percent01 = tex2D(_Mask, i.uv).r;

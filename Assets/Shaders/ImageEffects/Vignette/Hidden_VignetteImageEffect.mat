@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Opacity: 0.874
-    - _Radius: 0.49
-    - _Softness: 0.51
+    - _Radius: 0.539
+    - _Softness: 0
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
