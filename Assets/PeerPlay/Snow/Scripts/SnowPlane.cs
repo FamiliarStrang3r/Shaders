@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SnowPlane : MonoBehaviour
 {
-    [SerializeField] private bool drawGizmo = false;
     [SerializeField, Range(0, 0.1f)] private float flakeAmount = 0;
     [SerializeField, Range(0, 1)] private float flakeOpacity = 1;
 
@@ -13,7 +12,7 @@ public class SnowPlane : MonoBehaviour
     private Renderer rend = null;
 
     private RenderTexture splatMap = null;
-    private Material snowMaterial = null;
+    //private Material snowMaterial = null;
     private Material drawMaterial = null;
 
     private string savePath = string.Empty;
@@ -29,18 +28,6 @@ public class SnowPlane : MonoBehaviour
     private void FixedUpdate()
     {
         CreateSnow();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (!drawGizmo) return;
-
-        var c = Color.blue;
-        c.a = 0.5f;
-        Gizmos.color = c;
-        Vector3 ls = transform.localScale * 10;
-        ls.y = 0.001f;
-        Gizmos.DrawCube(transform.position, ls);
     }
 
     private void OnGUI()
@@ -59,11 +46,11 @@ public class SnowPlane : MonoBehaviour
         //else
         splatMap = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGBFloat);
 
-        snowMaterial = GetComponent<MeshRenderer>().material;
+        Material snowMaterial = GetComponent<MeshRenderer>().material;
         snowMaterial.SetTexture("_Splat", splatMap);
 
         drawMaterial = new Material(Shader.Find("Hidden/DrawSnow"));
-        drawMaterial.SetColor("_Color", Color.red);
+        drawMaterial.SetColor("_Color", Color.white);
     }
 
     private void SaveTexture()

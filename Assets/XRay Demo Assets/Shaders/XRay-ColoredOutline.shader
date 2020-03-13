@@ -1,19 +1,17 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "XRay Shaders/ColoredOutline"
+﻿Shader "XRay Shaders/ColoredOutline"
 {
 	Properties
 	{
-		_EdgeColor("Edge Color", Color) = (1,1,1,1)
+		//_EdgeColor("Edge Color", Color) = (1,1,1,1)
+		//[IntRange] _Power("Power", Range(1, 3)) = 1
 	}
 
 	SubShader
 	{
 		Stencil
 		{
-			Ref 0
-			Comp NotEqual
+			Ref 1		//0
+			Comp Equal	//NotEqual
 		}
 
 		Tags
@@ -23,7 +21,7 @@ Shader "XRay Shaders/ColoredOutline"
 			"XRay" = "ColoredOutline"
 		}
 
-		ZWrite Off
+		//ZWrite Off
 		ZTest Always
 		Blend One One
 
@@ -39,13 +37,11 @@ Shader "XRay Shaders/ColoredOutline"
 			struct appdata
 			{
 				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
 				float3 normal : NORMAL;
 			};
 
 			struct v2f
 			{
-				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 				float3 normal : NORMAL;
 				float3 viewDir : TEXCOORD1;
@@ -55,18 +51,19 @@ Shader "XRay Shaders/ColoredOutline"
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = v.uv;
 				o.normal = UnityObjectToWorldNormal(v.normal);
 				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, v.vertex).xyz);
 				return o;
 			}
 
-			float4 _EdgeColor;
+			fixed4 _EdgeColor;
+			float _Power;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float NdotV = 1 - dot(i.normal, i.viewDir) * 1.5;
-				return _EdgeColor * NdotV;
+				float rim = 1 - dot(i.normal, i.viewDir);
+				return _EdgeColor * pow(rim, _Power);
+				//return _EdgeColor;
 			}
 
 			ENDCG

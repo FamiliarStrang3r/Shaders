@@ -9,9 +9,9 @@
 		_Speed("Noise Speed", Range(0, 5)) = 1
 		_PixelOffset("Pixel Offset", Range(0, 10)) = 1
 
-		[Header(Vignette)]
-		_Radius("Radius", Range(0, 1)) = 1
-		_Softness("Softness", Range(0, 1)) = 0.5
+		//[Header(Vignette)]
+		//_Radius("Radius", Range(0, 1)) = 1
+		//_Softness("Softness", Range(0, 1)) = 0.5
     }
     SubShader
     {

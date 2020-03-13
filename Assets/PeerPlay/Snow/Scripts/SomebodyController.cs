@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SomebodyController : MonoBehaviour
 {
+    public Vector2 debugTexcoord;
+
     [SerializeField] private LayerMask groundMask = 0;
     [SerializeField, Range(0, 1)] private float brushStrength = 1;
     [SerializeField, Range(0, 10)] private int brushSize = 1;
@@ -26,6 +28,7 @@ public class SomebodyController : MonoBehaviour
         if (Physics.Raycast(ray, out var hit, 1, groundMask))
         {
             snowPlane.Draw(hit.textureCoord, brushStrength, brushSize);
+            debugTexcoord = hit.textureCoord;
         }
 
         HandleInput();

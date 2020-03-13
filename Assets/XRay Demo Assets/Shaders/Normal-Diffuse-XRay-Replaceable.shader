@@ -3,8 +3,9 @@ Shader "XRay Shaders/Diffuse-XRay-Replaceable"
 	Properties
 	{
 		_Color("Main Color", Color) = (1,1,1,1)
-		_EdgeColor("XRay Edge Color", Color) = (0,0,0,0)
 		_MainTex("Base (RGB)", 2D) = "white" {}
+		_EdgeColor("XRay Edge Color", Color) = (0,0,0,0)
+		[IntRange] _Power("Power", Range(1, 3)) = 1
 	}
 
 	SubShader
@@ -15,12 +16,12 @@ Shader "XRay Shaders/Diffuse-XRay-Replaceable"
 			//This is so their depth info is already in the ZBuffer, and Occluding objects won't mistakenly
 			//write to the Stencil buffer when they shouldn't.		
 			//
-			//This is what "Queue" = "Geometry-1" is for.
+			//This is what "Queue" = "Geometry-10" is for.
 			//I didn't bring this up in the video because I'm an idiot.
 			//Cheers,Dan
 
-			"Queue" = "Geometry-1"
 			"RenderType" = "Opaque"
+			"Queue" = "Geometry-10"
 			"XRay" = "ColoredOutline"
 		}
 		LOD 200

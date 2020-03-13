@@ -5,7 +5,7 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_OutlineColor("Outline Color", Color) = (1,1,1,1)
 		[MaterialToggle] _Outline("Outline", float) = 0
-		_Size("Size", Range(0, 3)) = 1
+		[IntRange] _Size("Size", Range(0, 3)) = 1
 		//[MaterialToggle] _PixelSnap ("Pixel snap", Float) = 0
 		//[PerRendererData]
 

@@ -1,18 +1,21 @@
-﻿Shader "Hidden/TestGradient"
+﻿Shader "Unlit/TestUnlit"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
     }
+
     SubShader
     {
-        // No culling or depth
-        Cull Off 
-		//ZWrite Off 
-		//ZTest Always
+        Tags
+		{
+			"RenderType" = "Opaque"
+			"Replacement" = "Shader"
+		}
 
         Pass
         {
+			//Blend One One
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -22,31 +25,33 @@
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+				float3 normal : NORMAL;
             };
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+				float3 normal : NORMAL;
+				float3 viewDir : TEXCOORD1;
             };
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+				o.normal = UnityObjectToWorldNormal(v.normal);
+				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, v.vertex).xyz);
                 return o;
             }
 
-            sampler2D _MainTex;
+			fixed4 _Color;
 
             fixed4 frag (v2f i) : SV_Target
             {
-				fixed4 black = fixed4(0, 0, 0, 1);
-				fixed4 white = fixed4(1, 1, 1, 1);
-				fixed4 col = lerp(black, white, i.uv.x) / lerp(black, white, i.uv.y);
-                return saturate(col);
+				//half rim = 1 - saturate(dot(normalize(IN.viewDir), o.Normal));// standard rim calculation  
+
+				float rim = 1 - dot(i.normal, i.viewDir);
+                return _Color * rim;
             }
             ENDCG
         }

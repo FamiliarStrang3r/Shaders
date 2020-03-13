@@ -57,7 +57,9 @@
 			//height of the vertex in the range (0,1)
 			float height = (localSpaceVertex.y / 2 + .5);
 
-			fixed color = tex2Dlod(_Mask, float4(v.texcoord.xy, 0, 0)).r;
+			//fixed color = tex2Dlod(_Mask, float4(v.texcoord.xy, 0, 0)).r;
+			fixed percent01 = float4(v.texcoord.xy, 0, 0).y;
+			fixed4 color = lerp(fixed4(0, 0, 0, 1), fixed4(1, 1, 1, 1), percent01);
 			height *= color;
 			
 			fixed sinX = sin(_Time.y * _Frequency + worldSpaceVertex.x * _GustDistance);

@@ -8,7 +8,11 @@ Shader "XRay Shaders/Diffuse-Stencil-Write"
 
 	SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
+		Tags
+		{
+			"RenderType" = "Opaque"
+			"Queue" = "Geometry"
+		}
 		LOD 200
 
 		Stencil
@@ -16,7 +20,7 @@ Shader "XRay Shaders/Diffuse-Stencil-Write"
 			Ref 1
 			Comp Always
 			Pass Replace
-			ZFail Keep
+			//ZFail Keep
 		}
 
 		CGPROGRAM

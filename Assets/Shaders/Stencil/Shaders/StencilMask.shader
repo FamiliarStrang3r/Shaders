@@ -2,7 +2,7 @@
 {
     Properties
     {
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        [PerRendererData] _MainTex ("Albedo (RGB)", 2D) = "white" {}
 
 		[Header(Stencil)]
 		[IntRange] _Ref("Ref", Range(0, 255)) = 1
@@ -19,15 +19,16 @@
 			"Queue" = "Geometry-100"
 		}
 		//dont draw mesh color channels into scene
-		//otherwise objects behind the mask would not rendered - opposite what we want
 		ColorMask 0
+		//stop writing to depth buffer,
+		//otherwise objects behind the mask would not rendered - opposite what we want
 		ZWrite Off
 
 		Stencil
 		{
-			Ref[_Ref]
-			Comp[_Comp]
-			Pass[_Pass]
+			Ref [_Ref]
+			Comp [_Comp]//default: always, now doesnt matter
+			Pass [_Pass]//SL: replace - when shader passes replace all values in stencil buffer with new reference value
 		}
 
         CGPROGRAM

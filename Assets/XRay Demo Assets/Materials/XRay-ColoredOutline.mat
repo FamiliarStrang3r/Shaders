@@ -20,6 +20,6 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Power: 1.5
+    - _Power: 1
     m_Colors:
-    - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}

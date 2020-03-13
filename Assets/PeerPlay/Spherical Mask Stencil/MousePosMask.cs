@@ -16,11 +16,7 @@ public class MousePosMask : MonoBehaviour
     private void FixedUpdate()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out var hit))
-        {
-            Shader.SetGlobalVector("_Position", hit.point);
-        }
+        if (Physics.Raycast(ray, out var hit)) Shader.SetGlobalVector("_Position", hit.point);
     }
 
     private void OnValidate()

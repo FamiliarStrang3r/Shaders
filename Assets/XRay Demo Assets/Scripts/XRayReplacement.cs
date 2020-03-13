@@ -5,8 +5,13 @@ public class XRayReplacement : MonoBehaviour
 {
     [SerializeField] private Shader xRayShader = null;
 
-    void OnEnable()
+    private void OnEnable()
     {
         GetComponent<Camera>().SetReplacementShader(xRayShader, "XRay");
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Camera>().ResetReplacementShader();
     }
 }

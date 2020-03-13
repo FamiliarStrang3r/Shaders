@@ -1,4 +1,4 @@
-﻿Shader "Custom/StencilObject"
+﻿Shader "Custom/ObjectShader"
 {
     Properties
     {
@@ -6,23 +6,15 @@
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
-
-		[Header(Stencil)]
-		[IntRange] _Ref("Ref", Range(0, 255)) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp("Comp", float) = 3
-		[Enum(UnityEngine.Rendering.StencilOp)] _Pass("Pass", float) = 0
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 200
-
-		Stencil
+        Tags
 		{
-			Ref [_Ref]
-			Comp [_Comp]//SL: equal - each vertex will only be rendered if ref value is equal to the valu in stencil buffer
-			Pass [_Pass]//default: keep, now doesnt matter
+			"RenderType"="Opaque"
+			"Replacement" = "Shader"
 		}
+        LOD 200
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types

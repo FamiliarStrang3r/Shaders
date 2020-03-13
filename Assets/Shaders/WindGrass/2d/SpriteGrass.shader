@@ -57,11 +57,12 @@
 
 				float height = (localSpaceVertex.y / 2 + .5);//height of the vertex in the range (0,1)
 
-				fixed color = tex2Dlod(_Mask, float4(v.uv, 0, 0)).r;
+				//fixed color = tex2Dlod(_Mask, float4(v.uv, 0, 0)).r;
+				fixed percent01 = float4(v.uv, 0, 0).y;
+				fixed4 color = lerp(fixed4(0, 0, 0, 1), fixed4(1, 1, 1, 1), percent01);
 				height *= color;
 
 				float sinValue = sin(_Time.y * _Frequency);
-				//float percent01 = (sinValue + 1) / 2;
 				worldSpaceVertex.x += sinValue * height * _Strength;
 
 				//takes the new modified position of the vert in world space and then puts it back in local space
