@@ -1,4 +1,4 @@
-﻿Shader "Custom/StencilObject"
+﻿Shader "Dima/Stencil/StencilObject"
 {
     Properties
     {

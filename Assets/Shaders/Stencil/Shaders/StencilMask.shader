@@ -1,4 +1,4 @@
-﻿Shader "Custom/StencilMask"
+﻿Shader "Dima/Stencil/Mask"
 {
     Properties
     {
@@ -15,7 +15,7 @@
 		//if object rendered before mask - mask would not apply to it
         Tags
 		{
-			"RenderType" = "Opaque"
+			//"RenderType" = "Opaque"
 			"Queue" = "Geometry-100"
 		}
 		//dont draw mesh color channels into scene
@@ -31,20 +31,13 @@
 			Pass [_Pass]//SL: replace - when shader passes replace all values in stencil buffer with new reference value
 		}
 
-        CGPROGRAM
+		//Pass {}
+
+		CGPROGRAM
 		#pragma surface surf Lambert
-
         sampler2D _MainTex;
-
-        struct Input
-        {
-            float2 uv_MainTex;
-        };
-
-        void surf (Input IN, inout SurfaceOutput o)
-        {
-            o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
-        }
+        struct Input { float2 uv_MainTex; };
+        void surf (Input IN, inout SurfaceOutput o) { o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb; }
         ENDCG
     }
 }
