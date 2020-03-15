@@ -6,6 +6,7 @@ Shader "XRay Shaders/Diffuse-XRay-Replaceable"
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_EdgeColor("XRay Edge Color", Color) = (0,0,0,0)
 		[IntRange] _Power("Power", Range(1, 3)) = 1
+		_Percent("Percent", Range(0, 1)) = 1
 	}
 
 	SubShader

@@ -12,6 +12,7 @@
 		{
 			Ref 1		//0
 			Comp Equal	//NotEqual
+			Pass Keep	//default
 		}
 
 		Tags
@@ -52,18 +53,22 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.normal = UnityObjectToWorldNormal(v.normal);
-				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, v.vertex).xyz);
+				o.viewDir = normalize(WorldSpaceViewDir(v.vertex));//out of the box is same but shorter 
+				//o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, v.vertex).xyz);
 				return o;
 			}
 
 			fixed4 _EdgeColor;
 			float _Power;
 
+			float _Percent;
+
 			fixed4 frag (v2f i) : SV_Target
 			{
 				float rim = 1 - dot(i.normal, i.viewDir);
-				return _EdgeColor * pow(rim, _Power);
-				//return _EdgeColor;
+				return _EdgeColor * pow(rim, _Power);// * _Percent;
+				//for enemies multiply by global float percent01
+				//as blending is One One: 0 - outline hidden, 1 - visible
 			}
 
 			ENDCG
