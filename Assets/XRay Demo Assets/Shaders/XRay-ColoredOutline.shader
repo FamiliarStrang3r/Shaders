@@ -61,12 +61,12 @@
 			fixed4 _EdgeColor;
 			float _Power;
 
-			float _Percent;
+			uniform float _Percent;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
 				float rim = 1 - dot(i.normal, i.viewDir);
-				return _EdgeColor * pow(rim, _Power);// * _Percent;
+				return _EdgeColor * pow(rim, _Power) * _Percent;
 				//for enemies multiply by global float percent01
 				//as blending is One One: 0 - outline hidden, 1 - visible
 			}

@@ -15,6 +15,7 @@ public class AimController : MonoBehaviour
     private void Start()
     {
         pos = isAiming ? aim : normal;
+        Shader.SetGlobalFloat("_Percent", isAiming ? 1 : 0);
     }
 
     private void Update()
@@ -23,6 +24,7 @@ public class AimController : MonoBehaviour
         {
             isAiming = !isAiming;
             pos = isAiming ? aim : normal;
+            Shader.SetGlobalFloat("_Percent", isAiming ? 1 : 0);
         }
     }
 

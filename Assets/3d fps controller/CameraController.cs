@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     [SerializeField, Range(0, 1)] private float smooth = 1;
     [SerializeField, Range(0, 2)] private float sens = 1;
 
+    [SerializeField] private SightSway sway = null;
+
     private float yaw = 0;
     private float pitch = 0;
 
@@ -31,21 +33,26 @@ public class CameraController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     private void Update()
     {
-        if (isDragging)
-        {
-            draggingPosition = Input.mousePosition;
-
-            Vector3 diff = clickedPosition - draggingPosition;
-            clickedPosition = draggingPosition;
-
-            yaw -= diff.x * sens;
-            yaw %= 360;
-            pitch -= diff.y * sens;
-
-            pitch = Mathf.Clamp(pitch, minMax.x, minMax.y);
-        }
+        if (isDragging) Rotate();
 
         player.rotation = Quaternion.Slerp(player.rotation, Quaternion.AngleAxis(yaw, Vector3.up), smooth);
         hands.localRotation = Quaternion.Slerp(hands.localRotation, Quaternion.AngleAxis(-pitch, Vector3.right), smooth);
+    }
+
+    private void Rotate()
+    {
+        draggingPosition = Input.mousePosition;
+
+        Vector3 diff = clickedPosition - draggingPosition;
+        clickedPosition = draggingPosition;
+
+        sway.h = diff.x != 0 ? Mathf.Sign(diff.x) : 0;
+        sway.v = diff.y != 0 ? Mathf.Sign(diff.y) : 0;
+
+        yaw -= diff.x * sens;
+        yaw %= 360;
+        pitch -= diff.y * sens;
+
+        pitch = Mathf.Clamp(pitch, minMax.x, minMax.y);
     }
 }
