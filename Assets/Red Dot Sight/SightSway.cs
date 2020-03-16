@@ -22,6 +22,6 @@ public class SightSway : MonoBehaviour
         //norm vrode
         Vector3 input = new Vector3(v, -h) * intensity;
         r = Vector3.SmoothDamp(r, input, ref smoothVelocity, smooth);
-        transform.rotation = Quaternion.Euler(r);
+        transform.localRotation = Quaternion.Euler(r);
     }
 }

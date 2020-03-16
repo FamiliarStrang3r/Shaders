@@ -30,7 +30,7 @@ Material:
     m_Floats:
     - _FixedSize: 0
     - _RedDotDist: 20
-    - _RedDotSize: 10
+    - _RedDotSize: 5
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 0}
-    - _RedDotColor: {r: 1, g: 0.3921569, b: 0, a: 1}
+    - _RedDotColor: {r: 1, g: 0, b: 0, a: 1}
