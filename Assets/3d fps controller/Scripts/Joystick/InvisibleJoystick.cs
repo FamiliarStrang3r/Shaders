@@ -32,8 +32,8 @@ public class InvisibleJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpH
             Vector3 diff = clickedPosition - draggingPosition;
             clickedPosition = draggingPosition;
 
-            Horizontal = diff.x;
-            Vertical = diff.y;
+            Horizontal = -diff.x;
+            Vertical = -diff.y;
         }
     }
 }

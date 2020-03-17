@@ -7,6 +7,7 @@ public class SightSway : MonoBehaviour
     [SerializeField] private Vector3 intensity = Vector3.zero;
     [SerializeField, Range(0, 1)] private float smooth = 1;
 
+    private MoveJoystick moveJoystick = null;
     private InvisibleJoystick invisibleJoystick = null;
 
     private Vector3 smoothVelocity = Vector3.zero;
@@ -17,13 +18,14 @@ public class SightSway : MonoBehaviour
 
     private void Start()
     {
+        moveJoystick = MoveJoystick.Instance;
         invisibleJoystick = FindObjectOfType<InvisibleJoystick>();
     }
 
     private void FixedUpdate()
     {
-        float h = invisibleJoystick.Horizontal;
-        float v = invisibleJoystick.Vertical;
+        float h = Mathf.Clamp(invisibleJoystick.Horizontal + moveJoystick.Horizontal, -1, 1);
+        float v = Mathf.Clamp(invisibleJoystick.Vertical + moveJoystick.Vertical, -1 , 1);
 
         horizontal = h != 0 ? Mathf.Sign(h) : 0;
         vertical = v != 0 ? Mathf.Sign(v) : 0;

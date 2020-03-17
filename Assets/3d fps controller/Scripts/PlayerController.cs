@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 10;
 
     private CharacterController cc = null;
-    private MoveJoystick js = null;
+    private MoveJoystick moveJoystick = null;
 
     [SerializeField] private Transform head = null;
     [SerializeField] private Vector2 minMax = Vector2.zero;
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         cc = GetComponent<CharacterController>();
-        js = MoveJoystick.Instance;
+        moveJoystick = MoveJoystick.Instance;
         invisibleJoystick = FindObjectOfType<InvisibleJoystick>();
     }
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePosition()
     {
-        var move = transform.right * js.Horizontal + transform.forward * js.Vertical;
+        var move = transform.right * moveJoystick.Horizontal + transform.forward * moveJoystick.Vertical;
         if (move.magnitude > 1) move.Normalize();
         cc.Move(move * speed * Time.deltaTime);
     }
@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour
 
     private void CalculateRotation()
     {
-        yaw -= invisibleJoystick.Horizontal * sens;
+        yaw += invisibleJoystick.Horizontal * sens;
         yaw %= 360;
-        pitch -= invisibleJoystick.Vertical * sens;
+        pitch += invisibleJoystick.Vertical * sens;
 
         pitch = Mathf.Clamp(pitch, minMax.x, minMax.y);
     }
