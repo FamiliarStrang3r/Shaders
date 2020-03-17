@@ -15,6 +15,9 @@ public class MoveJoystick : JoystickController
 
     protected override void Awake() => InitializeSingleton();
 
-    public override float Horizontal => Direction.x != 0 ? Direction.x : Input.GetAxisRaw("Horizontal");
-    public override float Vertical => Direction.y != 0 ? Direction.y : Input.GetAxisRaw("Vertical");
+    //public override float Horizontal => Direction.x != 0 ? Direction.x : Input.GetAxisRaw("Horizontal");
+    //public override float Vertical => Direction.y != 0 ? Direction.y : Input.GetAxisRaw("Vertical");
+
+    public override float Horizontal => base.Horizontal != 0 ? base.Horizontal : Input.GetAxisRaw("Horizontal");
+    public override float Vertical => base.Vertical != 0 ? base.Vertical : Input.GetAxisRaw("Vertical");
 }

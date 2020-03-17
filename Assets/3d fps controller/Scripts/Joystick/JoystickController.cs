@@ -17,17 +17,17 @@ public abstract class JoystickController : MonoBehaviour,
     [SerializeField] private SmoothTransition smoothTransition = null;
 
     private RectTransform moveableJoytick = null;
-    private CanvasGroup canvasGroup = null;
     private Vector2 delta = Vector2.zero;
     private Vector2 startPosition = Vector2.zero;
 
+    private CanvasGroup canvasGroup = null;
     private IEnumerator joytickRoutine = null;
 
     private Vector2 direction = Vector2.zero;
     public virtual float Horizontal => direction.x;
     public virtual float Vertical => direction.y;
     public bool HasInput => direction != Vector2.zero;
-    public Vector2 Direction => direction;
+    //public Vector2 Direction => direction;
 
     protected abstract void Awake(); //used for singleton
 
@@ -69,13 +69,14 @@ public abstract class JoystickController : MonoBehaviour,
             direction.x = Mathf.Clamp(direction.x, -1, 1);
             direction.y = Mathf.Clamp(direction.y, -1, 1);
 
-            //if (direction.magnitude > 1) direction.Normalize();
+            if (direction.magnitude > 1) direction.Normalize();
 
-            Vector2 finalPosition = new Vector2(direction.x * delta.x / 3, direction.y * delta.y / 3);
-            //Vector2 finalPosition = Direction.normalized * delta / 3;
+            Vector2 finalPosition = direction * delta / 3;
             moveableJoytick.anchoredPosition = finalPosition;
         }
     }
+
+    //un-used
 
     private void InvokeJoytickRoutine(bool enable)
     {

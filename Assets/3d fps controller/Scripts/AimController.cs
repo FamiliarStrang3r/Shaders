@@ -9,13 +9,11 @@ public class AimController : MonoBehaviour
     [SerializeField] private Vector3 normal = Vector3.zero;
 
     private Vector3 pos = Vector3.zero;
-
     private bool isAiming = false;
 
     private void Start()
     {
         pos = isAiming ? aim : normal;
-        Shader.SetGlobalFloat("_Percent", isAiming ? 1 : 0);
     }
 
     private void Update()
@@ -24,12 +22,16 @@ public class AimController : MonoBehaviour
         {
             isAiming = !isAiming;
             pos = isAiming ? aim : normal;
-            Shader.SetGlobalFloat("_Percent", isAiming ? 1 : 0);
         }
     }
 
     private void FixedUpdate()
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, pos, smooth);
+    }
+
+    private void ChangeShader()
+    {
+        Shader.SetGlobalFloat("_Percent", isAiming ? 1 : 0);
     }
 }
